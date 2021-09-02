@@ -14,7 +14,7 @@ def tf_bin(x, cut_points, temperature=0.1):
     # this function produces a N-by-(D+1) matrix, each row has only one element being one and the rest are all zeros
     D = cut_points.get_shape().as_list()[0]
     W = tf.reshape(tf.linspace(1.0, D + 1.0, D + 1), [1, -1])
-    cut_points = tf.contrib.framework.sort(cut_points)  # make sure cut_points is monotonically increasing
+    cut_points = tf.sort(cut_points)  # make sure cut_points is monotonically increasing
     b = tf.cumsum(tf.concat([tf.constant(0.0, shape=[1]), -cut_points], 0))
     h = tf.matmul(x, W) + b
     res = tf.nn.softmax(h / temperature)
